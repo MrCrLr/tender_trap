@@ -1,0 +1,8 @@
+# Load Terraform API Token
+echo "Loading Terraform API token from 1Password..." >&2
+export TF_TOKEN_app_terraform_io=$(op read "op://Path/to/terraform/credential")
+
+# Load AWS credentials
+echo "Loading AWS credentials from 1Password..." >&2
+export AWS_ACCESS_KEY_ID=$(op read "op://Path/to/AWS/access key id")
+export AWS_SECRET_ACCESS_KEY=$(op read "op://Path/to/AWS/secret access key")
