@@ -8,6 +8,7 @@ crash.log
 
 # Local .terraform directories
 .terraform/
+.op/
 
 # Environment files
 .envrc

@@ -56,7 +56,7 @@ resource "aws_network_acl_rule" "public_inbound_https" {
 }
 
 resource "aws_network_acl_rule" "public_inbound_tcp_ephemeral" {
-  rule_number    = 140
+  rule_number    = 141
   egress         = false
   protocol       = "tcp"
   rule_action    = "allow"
@@ -67,7 +67,7 @@ resource "aws_network_acl_rule" "public_inbound_tcp_ephemeral" {
 }
 
 resource "aws_network_acl_rule" "public_inbound_udp_ephemeral" {
-  rule_number    = 150
+  rule_number    = 151
   egress         = false
   protocol       = "udp"
   rule_action    = "allow"
@@ -78,7 +78,7 @@ resource "aws_network_acl_rule" "public_inbound_udp_ephemeral" {
 }
 
 resource "aws_network_acl_rule" "public_inbound_icmp" {
-  rule_number    = 160
+  rule_number    = 161
   egress         = false
   protocol       = "icmp"
   rule_action    = "allow"
@@ -136,7 +136,7 @@ resource "aws_network_acl_rule" "private_inbound_syslog" {
 }
 
 resource "aws_network_acl_rule" "private_inbound_tcp_ephemeral" {
-  rule_number    = 120
+  rule_number    = 121
   egress         = false
   protocol       = "tcp"
   rule_action    = "allow"
@@ -147,7 +147,7 @@ resource "aws_network_acl_rule" "private_inbound_tcp_ephemeral" {
 }
 
 resource "aws_network_acl_rule" "private_inbound_udp_ephemeral" {
-  rule_number    = 130
+  rule_number    = 131
   egress         = false
   protocol       = "udp"
   rule_action    = "allow"
@@ -158,7 +158,7 @@ resource "aws_network_acl_rule" "private_inbound_udp_ephemeral" {
 }
 
 resource "aws_network_acl_rule" "private_inbound_icmp" {
-  rule_number    = 140
+  rule_number    = 141
   egress         = false
   protocol       = "icmp"
   rule_action    = "allow"
@@ -232,6 +232,36 @@ ingress {
   tags = merge(local.common_tags, {
     Name = "tender-trap-honeypot-sg"
   })
+}
+
+###################################
+# Security Group - NAT Instance
+###################################
+resource "aws_security_group" "tender_trap_nat_sg" {
+  name        = "tender-trap-nat-sg"
+  description = "Allow all outbound for NAT"
+  vpc_id      = aws_vpc.tender_trap_vpc.id
+
+  ingress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = [var.private_subnet_cidr]
+  }
+  
+  ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = [var.ssh_ingress_ip]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
 }
 
 ###################################
