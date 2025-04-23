@@ -5,6 +5,7 @@ crash.log
 
 # Terraform plan files
 *.tfplan
+tfplan
 
 # Local .terraform directories
 .terraform/
@@ -15,7 +16,7 @@ crash.log
 .env
 
 # Sensitive variable override files
-# terraform.tfvars
+terraform.tfvars
 terraform.tfvars.json
 
 # Editor/OS-specific

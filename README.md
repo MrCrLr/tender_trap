@@ -11,10 +11,12 @@ This repository defines a minimal yet secure AWS infrastructure using [Terraform
 
 It provisions:
 - A custom **VPC** with public/private subnets
-- A **NAT Gateway** and **Internet Gateway**
+- An **EC2 NAT instance** (with IP forwarding and masquerading) and **Internet Gateway**
 - **EC2 Instances**:
-  - `tender-honeypot`: public-facing instance
-  - `tender-monitor`: private instance with outbound-only internet
+  - `tender-trap-honeypot`: public-facing instance
+  - `tender-trap-monitor`: private instance with outbound-only internet
+  - `tender-trap-nat`: public instance with outbound-only internet
+
 - **Security Groups** and **Network ACLs** to restrict and control traffic
 - Route tables, tags, and outputs for future automation
 
@@ -46,7 +48,7 @@ Make sure you have the following tools installed:
    - A **Terraform Cloud token** for remote state
    - An **AWS IAM key pair** for resource provisioning
 3. Resources are provisioned in **eu-north-1** (`Stockholm`) with clearly tagged assets and a modular structure.
-4. **Private EC2 instances** access the internet via the NAT Gateway.
+4. **Private EC2 instance** access the internet via a NAT EC2 instance configured for packet forwarding and masquerading.
 
 ---
 
@@ -74,7 +76,7 @@ Make sure you have the following tools installed:
 - NACLs configured with **explicit ephemeral port ranges** for return traffic
 - SGs follow a **deny-all except explicitly allowed** policy
 - Public route tables and default behaviors are **overridden manually** or tagged
-- SSH Agent Forwarding used for hopping from the public honeypot to the private monitor (via trusted local key)
+- SSH Agent Forwarding used for hopping from the public NAT instance to the private monitor (via trusted local key)
 
 ---
 

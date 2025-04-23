@@ -197,13 +197,13 @@ resource "aws_security_group" "tender_trap_honeypot_sg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-ingress {
-  description = "Real SSH for admin"
-  from_port   = 2222
-  to_port     = 2222
-  protocol    = "tcp"
-  cidr_blocks = [var.ssh_ingress_ip]
-}
+  ingress {
+    description = "Real SSH for admin"
+    from_port   = 2222
+    to_port     = 2222
+    protocol    = "tcp"
+    cidr_blocks = [var.ssh_ingress_ip]
+  }
 
   ingress {
     description = "HTTP"
@@ -262,6 +262,10 @@ resource "aws_security_group" "tender_trap_nat_sg" {
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
+  
+  tags = merge(local.common_tags, {
+    Name = "tender-trap-nat-sg"
+  })
 }
 
 ###################################

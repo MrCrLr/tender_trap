@@ -138,6 +138,10 @@ resource "aws_route_table_association" "private_subnet_assoc" {
 # Allocate EIP for honeypot
 resource "aws_eip" "tender_trap_honeypot_eip" {
   domain = "vpc"
+
+  tags = merge(local.common_tags, {
+    Name = "tender-trap-honeypot-eip"
+  })
 }
 
 # Associate honeypot EIP with instance
@@ -149,6 +153,10 @@ resource "aws_eip_association" "honeypot_eip_assoc" {
 # Allocate EIP for NAT EC2 instance
 resource "aws_eip" "tender_trap_nat_eip" {
   domain = "vpc"
+
+  tags = merge(local.common_tags, {
+    Name = "tender-trap-nat-eip"
+  })
 }
 
 # Associate NAT EIP with NAT EC2 instance

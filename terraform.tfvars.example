@@ -1,0 +1,18 @@
+# terraform.tfvars.example
+
+# Region and availability
+aws_region         = "eu-north-1"
+availability_zone  = "eu-north-1a"
+
+# Networking
+vpc_cidr            = "10.10.10.0/27"
+public_subnet_cidr  = "10.10.10.0/28"
+private_subnet_cidr = "10.10.10.16/28"
+
+# IP restrictions (replace with your real IP in terraform.tfvars)
+ssh_ingress_ip = "0.0.0.0/32"
+
+# EC2 settings
+ami_id         = "ami-0548d28d4f7ec72c5"
+instance_types = { honeypot = "t3.micro", monitor = "t3.small" }
+key_pair_name  = "your-key-name"
